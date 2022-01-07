@@ -8,7 +8,7 @@ import project.employeeapi.employeeapi.entity.Employee;
 import project.employeeapi.employeeapi.repository.EmployeeRepository;
 
 @RestController
-@RequestMapping("/api/v2/employee")
+@RequestMapping("/api/v1/employee")
 public class EmployeeController {
 
     private EmployeeRepository employeeRepository;
@@ -17,7 +17,6 @@ public class EmployeeController {
     public EmployeeController(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
     }
-
 
 
     @PostMapping
