@@ -8,6 +8,9 @@ import project.employeeapi.employeeapi.entity.Employee;
 import project.employeeapi.employeeapi.mapper.EmployeeMapper;
 import project.employeeapi.employeeapi.repository.EmployeeRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class EmployeeService {
 
@@ -30,4 +33,13 @@ public class EmployeeService {
                 .build();
     }
 
-}
+
+    public List<EmployeeDTO> listAll() {
+       List<Employee> allEmployee = employeeRepository.findAll();
+            return allEmployee.stream()
+                    .map(employeeMapper::toDTO)
+                    .collect(Collectors.toList());
+        }
+
+    }
+

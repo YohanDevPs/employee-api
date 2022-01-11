@@ -10,6 +10,7 @@ import project.employeeapi.employeeapi.entity.Employee;
 import project.employeeapi.employeeapi.service.EmployeeService;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/employee")
@@ -27,4 +28,10 @@ public class EmployeeController {
     public MessageResponseDTO createEmployee(@RequestBody @Valid EmployeeDTO employeeDTO) {
         return employeeService.createEmployee(employeeDTO);
     }
+
+    @GetMapping
+    public List<EmployeeDTO> listAll(){
+      return employeeService.listAll();
+    };
+
 }

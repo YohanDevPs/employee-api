@@ -39,8 +39,6 @@ public class EmployeeDTO {
     @Size(max = 50)
     private String specialty;
 
-    @NotEmpty
-    @CPF
     private  String cpf;
 
     private LocalDate birthDate;
