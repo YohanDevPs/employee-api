@@ -40,6 +40,7 @@ public class EmployeeDTO {
     private String specialty;
 
     @NotEmpty
+    @CPF
     private  String cpf;
 
     private LocalDate birthDate;
