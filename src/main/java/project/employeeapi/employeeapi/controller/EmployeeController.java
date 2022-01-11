@@ -6,7 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import project.employeeapi.employeeapi.dto.MessageResponseDTO;
 import project.employeeapi.employeeapi.dto.request.EmployeeDTO;
-import project.employeeapi.employeeapi.entity.Employee;
+import project.employeeapi.employeeapi.exception.EmployeeNotFoundException;
 import project.employeeapi.employeeapi.service.EmployeeService;
 
 import javax.validation.Valid;
@@ -33,5 +33,10 @@ public class EmployeeController {
     public List<EmployeeDTO> listAll(){
       return employeeService.listAll();
     };
+
+    @GetMapping("/{id}")
+    public  EmployeeDTO findById(@PathVariable Long id) throws EmployeeNotFoundException {
+        return  employeeService.findById(id);
+    }
 
 }
