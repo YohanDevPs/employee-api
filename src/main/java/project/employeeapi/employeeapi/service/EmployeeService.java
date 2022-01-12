@@ -10,7 +10,6 @@ import project.employeeapi.employeeapi.mapper.EmployeeMapper;
 import project.employeeapi.employeeapi.repository.EmployeeRepository;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -29,10 +28,7 @@ public class EmployeeService {
         Employee employeeToSave = employeeMapper.toModel(employeeDTO);
 
         Employee savedEmployee = employeeRepository.save(employeeToSave);
-        return MessageResponseDTO
-                .builder()
-                .message("Created employee if ID " + savedEmployee.getId())
-                .build();
+        return createMethodResponse(savedEmployee.getId(), "Created employee if ID ");
     }
 
 
@@ -44,13 +40,8 @@ public class EmployeeService {
     }
 
     public EmployeeDTO findById(Long id) throws EmployeeNotFoundException {
-        Employee employee = verifyOfExists(id);
+        Employee employee = verifyIfExists(id);
         return employeeMapper.toDTO(employee);
-    }
-
-    private Employee verifyOfExists(Long id) throws EmployeeNotFoundException {
-        return employeeRepository.findById(id)
-                .orElseThrow(() -> new EmployeeNotFoundException(id));
     }
 
     public void delete(Long id) throws EmployeeNotFoundException {
@@ -58,5 +49,26 @@ public class EmployeeService {
                 .orElseThrow(()->new EmployeeNotFoundException(id));
 
         employeeRepository.deleteById(id);
+    }
+
+    public MessageResponseDTO updateBYId(Long id, EmployeeDTO employeeDTO) throws EmployeeNotFoundException {
+        verifyIfExists(id);
+
+        Employee employeeToUpdate = employeeMapper.toModel(employeeDTO);
+
+        Employee updatedEmployee = employeeRepository.save(employeeToUpdate);
+        return createMethodResponse(updatedEmployee.getId(), "Updated employee with ID ");
+    }
+
+    private Employee verifyIfExists(Long id) throws EmployeeNotFoundException {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+    }
+
+    private MessageResponseDTO createMethodResponse(Long id, String message) {
+        return MessageResponseDTO
+                .builder()
+                .message(message + id)
+                .build();
     }
 }

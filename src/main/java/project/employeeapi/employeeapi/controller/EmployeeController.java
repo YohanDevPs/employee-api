@@ -38,6 +38,12 @@ public class EmployeeController {
     public  EmployeeDTO findById(@PathVariable Long id) throws EmployeeNotFoundException {
         return  employeeService.findById(id);
     }
+
+    @PutMapping("/{id}")
+    public MessageResponseDTO updateById(@PathVariable Long id,@RequestBody @Valid EmployeeDTO employeeDTO) throws EmployeeNotFoundException {
+        return employeeService.updateBYId(id, employeeDTO);
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteById(@PathVariable Long id) throws EmployeeNotFoundException {
