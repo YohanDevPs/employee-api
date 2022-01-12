@@ -44,9 +44,19 @@ public class EmployeeService {
     }
 
     public EmployeeDTO findById(Long id) throws EmployeeNotFoundException {
-       Employee employee = employeeRepository.findById(id)
-                .orElseThrow(() ->new EmployeeNotFoundException(id));
-
+        Employee employee = verifyOfExists(id);
         return employeeMapper.toDTO(employee);
+    }
+
+    private Employee verifyOfExists(Long id) throws EmployeeNotFoundException {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new EmployeeNotFoundException(id));
+    }
+
+    public void delete(Long id) throws EmployeeNotFoundException {
+        employeeRepository.findById(id)
+                .orElseThrow(()->new EmployeeNotFoundException(id));
+
+        employeeRepository.deleteById(id);
     }
 }
